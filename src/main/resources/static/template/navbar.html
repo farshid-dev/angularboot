@@ -1,0 +1,21 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">CRM</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active" ng-show="authenticated"><a href="#/">Home</a></li>
+            <li class="dropdown" ng-show="authenticated" ng-repeat="tab in navbarData">
+                <a class="dropdown-toggle" data-toggle="dropdown">{{tab.tabName}}
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="feature in tab.features">
+                        <a ng-href="#!/{{feature}}">{{feature}}</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="active" ng-show="authenticated"><a href="#!/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>

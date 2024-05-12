@@ -1,0 +1,47 @@
+<div class="container-fluid">
+    <div class="container">
+        <div class="panel panel-default ">
+            <div class="alert alert-success">
+                <span class="lead">Login Page</span>
+                <p>Enter Username and Password</p>
+                <br/>
+                <div class="alert alert-danger" ng-show="loginerror">
+                    There was a problem logging in. Please try again.
+                </div>
+            </div>
+            <div class="panel-body ">
+                <div class="container">
+                    <form ng-submit="loginUser()" name="myForm"
+                          class="form-horizontal">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-lable" for="uname"> Username
+                                </label>
+                                <div class="col-md-7">
+                                    <input type="text" ng-model="credentials.username" id="uname" class="form-control input-sm" placeholder="Enter Username" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-lable" for="password">
+                                    Password
+                                </label>
+                                <div class="col-md-7">
+                                    <input type="password" ng-model="credentials.password"
+                                           id="password" class="form-control input-sm" placeholder="Enter Password" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-actions floatRight">
+                                <input type="submit" value="Login" class="btn btn-primary btn-sm">
+                                <button type="button" ng-click="resetForm()" class="btn btn-warning btn-sm">Reset Form</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

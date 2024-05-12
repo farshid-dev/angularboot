@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="alert alert-danger" role="alert" ng-if="errorMessage">{{errorMessage}}</div>
+  <div class="panel panel-default ">
+    <div class="alert alert-success">
+      <span class="lead">Register New Role</span>
+      <p>Please maintain uniqueness of Role Name</p>
+    </div>
+    <div class="panel-body ">
+      <div class="container">
+        <form ng-submit="submitRoleForm()" name="myForm1"
+              class="form-horizontal">
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label class="col-md-2 control-lable" for="rname">RoleName</label>
+              <div class="col-md-7">
+                <input type="text" ng-model="role.name" id="rname"
+                       class="form-control input-sm" placeholder="Enter role name" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-actions floatRight">
+              <input type="submit" value="Register Role"
+                     class="btn btn-primary btn-sm">
+              <button type="button" ng-click="resetForm()"
+                      class="btn btn-warning btn-sm">Reset Form</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

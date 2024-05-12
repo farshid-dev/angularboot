@@ -1,0 +1,70 @@
+<div class="container">
+	<div class="alert alert-danger" role="alert" ng-if="errorMessage">{{errorMessage}}</div>
+	<div class="panel panel-default ">
+		<div class="alert alert-success">
+			<span class="lead">Register New User</span>
+			<p>Please maintain uniqueness of User-Name</p>
+		</div>
+		<div class="panel-body ">
+			<div class="container">
+				<form ng-submit="submitUserForm()" name="myForm"
+					class="form-horizontal">
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label class="col-md-2 control-lable" for="uname">UserName</label>
+							<div class="col-md-7">
+								<input type="text" ng-model="user.username" id="uname"
+									class="form-control input-sm" placeholder="Enter user name" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label class="col-md-2 control-lable" for="pass">Password</label>
+							<div class="col-md-7">
+								<input type="text" ng-model="user.password" id="pass"
+									   class="form-control input-sm" placeholder="Enter Password" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label class="col-md-2 control-lable" for="address">Address</label>
+							<div class="col-md-7">
+								<input type="text" ng-model="user.address" id="address"
+									class="form-control input-sm" placeholder="Enter User Address." />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label class="col-md-2 control-lable" for="email">Email</label>
+							<div class="col-md-7">
+								<input type="email" ng-model="user.email" id="email"
+									class="form-control input-sm" placeholder="Enter User Email" />
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label class="col-md-2 control-lable">Role</label>
+							<div class="col-md-7">
+								<select ng-model="user.userRoleId" class="form-control" ng-options="role.id as role.name for role in roless">
+									<option value="">&#45;&#45;Select&#45;&#45;</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-actions floatRight">
+							<input type="submit" value="Register User"
+								class="btn btn-primary btn-sm">
+							<button type="button" ng-click="resetForm()"
+								class="btn btn-warning btn-sm">Reset Form</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

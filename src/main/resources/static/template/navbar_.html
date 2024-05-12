@@ -1,0 +1,38 @@
+<nav class="navbar navbar-default">
+    <div class="container">
+    <div class="container-fluid">
+            <div ng-show="authenticated && role=='ADMIN'">
+            <a href="#!/"
+               class="btn btn-info navbar-btn"
+               role="button">
+                Home
+            </a>
+            <a href="#!/register-new-user"
+               class="btn btn-info navbar-btn"
+               role="button">
+                Register New User
+            </a>
+            <a href="#!/list-all-users"
+               class="btn btn-info"
+               role="button">
+                List All Users
+            </a>
+            <a href="#!/logout"
+               class="btn btn-danger navbar-btn pull-right"
+               role="button">Logout
+            </a>
+        </div>
+        <div ng-show="authenticated && role=='USER'">
+            <a href="#!/"
+               class="btn btn-info navbar-btn"
+               role="button">
+                Home
+            </a>
+            <a href="#!/logout"
+               class="btn btn-danger navbar-btn pull-right"
+               role="button">Logout
+            </a>
+        </div>
+    </div>
+    </div>
+</nav>
