@@ -117,9 +117,12 @@ public class  UserDetailsServiceImpl implements UserDetailsService {
             String tabName = tabs.getName();
 
             List<FeatureTab> featureTab = null;
+
             try {
                 featureTab = (List<FeatureTab>) featureTabJpaRepository.findByTabId(tabs.getId()).get();
-            } catch (Exception e) {
+
+            }
+            catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
@@ -137,6 +140,7 @@ public class  UserDetailsServiceImpl implements UserDetailsService {
 
                 featuresList.add(finalFeatures);
             }
+
 
             tabFeaturesMap.put(tabName, featuresList);
 
