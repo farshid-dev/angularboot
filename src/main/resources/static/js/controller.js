@@ -385,11 +385,128 @@ app.controller('usersDetailsController',function($rootScope,$scope, $http, $loca
 }
 );
 
-app.controller('listTabController', function ($rootScope,$scope, $http, $location, $route) {
+
+app.controller('listTabController', function($rootScope, $scope, $http, $location, $route) {
+    console.log("Inside of listTabController...");
+
+    if ($rootScope.authenticated && $rootScope.currentRole == "ADMIN") {
+        console.log("Passed the condition inside the listTabController");
+
+        $http({
+            method: 'GET',
+            url: 'http://localhost:8080/api/tab/'
+        })
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+                $scope.tabs = response.data;
+            });
+
+        $scope.editTab = function(tabId) {
+            if ($rootScope.authenticated && $rootScope.currentRole == "ADMIN") {
+                console.log("Inside editTab function");
+                $scope.tabId = tabId;
+                $http({
+                    method: 'GET',
+                    url: 'http://localhost:8080/api/tab/' + $scope.tabId
+                }).then(function(response) {
+                    console.log("Current data of tab to edit..." + JSON.stringify(response.data));
+                    $scope.tab = response.data;
+                });
+            } else {
+                $location.path("/login");
+                $scope.loginerror = true;
+            }
+        }
+
+        $scope.createTab = function() {
+            console.log("Inside createTab function");
+            $http({
+                method: 'POST',
+                url: 'http://localhost:8080/api/tab/',
+                data: $scope.tab,
+            }).then(function(response) {
+                $('.modal-backdrop').hide();
+                $route.reload();
+            }, function(errResponse) {
+                $scope.errorMessage = errResponse.data.errorMessage;
+            });
+        }
+
+        $scope.deleteTab = function(tabId) {
+            $http({
+                method: 'DELETE',
+                url: 'http://localhost:8080/api/tab/' + tabId
+            })
+                .then(function(response) {
+                    $location.path("/list-all-tabs");
+                    $route.reload();
+                });
+        }
+
+        $scope.clearTab = function() {
+            $scope.tab = {}; // Clear tab object
+        };
+
+        $scope.availableTabs = [];
+        $scope.selectedTabs = [];
+
+        $scope.moveItem = function(itemsToMove, sourceList, targetList) {
+            if (itemsToMove && itemsToMove.length > 0) {
+                for (var i = 0; i < itemsToMove.length; i++) {
+                    var item = itemsToMove[i];
+                    console.log("Tab to move: " + item.name);
+                    for (var j = 0; j < sourceList.length; j++) {
+                        if (sourceList[j].id === item.id) {
+                            sourceList.splice(j, 1);
+                            targetList.push(item);
+                            break;
+                        }
+                    }
+                }
+            }
+            $scope.availableTabs = [];
+            $scope.selectedTabs = [];
+        };
+
+        $scope.moveAll = function(sourceList, targetList) {
+            $scope.moveItem(sourceList.slice(), sourceList, targetList);
+        };
+
+        $scope.closeTabModal = function() {
+            $('#createTabModal').modal('hide');
+            $scope.availableTabs = [];
+            $scope.selectedTabs = [];
+        };
+
+        $scope.updateRoleTabs = function(assignedTabs) {
+            console.log("Updating role tabs");
+            $scope.assignedTabs = [];
+            for (var j = 0; j < assignedTabs.length; j++) {
+                var item = assignedTabs[j];
+                $scope.assignedTabs.push(item);
+            }
+            console.log("Assigned tabs: " + JSON.stringify($scope.assignedTabs));
+            $http({
+                method: 'PUT',
+                url: 'http://localhost:8080/api/roletabs/' + parseInt($scope.roleId),
+                data: $scope.assignedTabs
+            }).then(function(response) {
+                $scope.tabUpdateResponse = response.data;
+            }, function(errResponse) {
+                $scope.errorMessage = errResponse.data.errorMessage;
+            });
+        }
+    }
+});
+
+
+
+app.controller('listFeaturesController', function ($rootScope,$scope, $http, $location, $route) {
 
         console.log("Inside of listRoleController...");
     }
 );
+
 
 app.controller('listRoleController', function($rootScope,$scope, $http, $location, $route) {
 

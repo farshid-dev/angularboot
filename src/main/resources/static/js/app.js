@@ -25,6 +25,11 @@ app.config(function($routeProvider,$locationProvider) {
             controller : 'listTabController'
         })
 
+        .when('/list-all-features', {
+            templateUrl : '/template/listfeature.html',
+            controller : 'listFeatureController'
+        })
+
         .when('/createUser',{
             templateUrl : '/template/userregistration.html',
             controller : 'registerUserController'
