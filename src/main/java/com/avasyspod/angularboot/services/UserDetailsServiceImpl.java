@@ -23,8 +23,8 @@ import java.util.*;
  */
 
 @Service
-public class  UserDetailsServiceImpl implements UserDetailsService {
-
+public class  UserDetailsServiceImpl implements UserDetailsService
+{
     @Autowired
     private HttpServletRequest request;
     @Autowired
@@ -49,8 +49,8 @@ public class  UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    {
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
             String headerName = headerNames.nextElement();
@@ -59,7 +59,8 @@ public class  UserDetailsServiceImpl implements UserDetailsService {
         }
 
         final String authorization = request.getHeader("Authorization");
-        if (authorization != null && authorization.toLowerCase().startsWith("basic")) {
+        if (authorization != null && authorization.toLowerCase().startsWith("basic"))
+        {
             // Authorization: Basic base64credentials
             String base64Credentials = authorization.substring("Basic".length()).trim();
             byte[] credDecoded = Base64.getDecoder().decode(base64Credentials);
@@ -70,7 +71,6 @@ public class  UserDetailsServiceImpl implements UserDetailsService {
         }
 
         System.out.println("LoadUserByUsername in UserDetailsServiceImple Called..........");
-
 
         User user = userJpaRepository.findByUsername(username);
 
@@ -89,8 +89,6 @@ public class  UserDetailsServiceImpl implements UserDetailsService {
                 getAuthorities(user));*/
       System.out.println(user.getUsername()+" : "+user.getPassword());
       return new CustomUser(user.getUsername(),user.getPassword(),getAuthorities(user),getFeatures(user));
-
-
     }
 
     private Map<String, List<FinalFeatures>> getFeatures(User user) {

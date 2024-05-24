@@ -24,22 +24,21 @@ public class UserService {
     @Autowired
     private RoleJpaRepository roleJpaRepository;
 
-    public UserService() {
+    public UserService()
+    {
     }
-
-    public UserService(UserJpaRepository userJpaRepository) {
-
+    public UserService(UserJpaRepository userJpaRepository)
+    {
         this.userJpaRepository = userJpaRepository;
     }
 
-    public List<UserDTO> getUsersWithRoleNames() {
-
+    public List<UserDTO> getUsersWithRoleNames()
+    {
         List<UserDTO> userDTOs = new ArrayList<>();
         List<UserRole> userRoles = userRoleJpaRepository.findAll();
 
-
-        for (UserRole userRole:userRoles) {
-
+        for (UserRole userRole:userRoles)
+        {
             User user = userJpaRepository.findById(userRole.getUserId()).get();
             Role role = roleJpaRepository.findById(userRole.getRoleId()).get();
 
@@ -57,10 +56,7 @@ public class UserService {
             userDTO.setUserRoleName(role.getName());
 
             userDTOs.add(userDTO);
-
         }
-
         return userDTOs;
     }
-
 }

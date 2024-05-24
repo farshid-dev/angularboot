@@ -1,0 +1,193 @@
+<div class="container pb-modalreglog-container">
+  <div class="row">
+    <div class="col-xs-12 col-md-4 col-md-offset-4">
+      <div class="modal fade" id="createTabModal" tabindex="-1" role="dialog" aria-labelledby="createTabModalLabel"
+           aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="closeRoleTab()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel2">Assign Tab To Role</h4>
+            </div>
+            <div class="modal-body">
+              <form ng-submit="" class="pb-modalreglog-form-reg">
+                <div class="form-group">
+                  <div id="pb-modalreglog-progressbar2"></div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-5">
+                    <div>Available Tabs</div>
+                    <select size="5" multiple ng-model="available" style="width: 100%; height: 150px;"
+                            ng-options="tab.name for tab in roletabs.availableTab track by tab.id">
+                    </select>
+                  </div>
+                  <div class="col-xs-2">
+                    <button id="moveright" type="button" ng-click="moveItem(available, roletabs.availableTab, roletabs.assignedTab)" class="btn btn-primary btn-block">
+                      >
+                    </button>
+                    <br>
+                    <button id="moverightall" type="button" ng-click="moveAll(roletabs.availableTab, roletabs.assignedTab)" class="btn btn-primary btn-block">
+                      >>
+                    </button>
+                    <br>
+                    <button id="moveleft" type="button" ng-click="moveItem(selected, roletabs.assignedTab, roletabs.availableTab)" class="btn btn-primary btn-block">
+                      <
+                    </button>
+                    <br>
+                    <button id="moveleftall" type="button" ng-click="moveAll(roletabs.assignedTab, roletabs.availableTab)" class="btn btn-primary btn-block">
+                      <<
+                    </button>
+                  </div>
+                  <div class="col-xs-5">
+                    <div>Assigned Tabs</div>
+                    <select size="5" multiple ng-model="selected" style="width: 100%; height: 150px;"
+                            ng-options="tab.name for tab in roletabs.assignedTab track by tab.id">
+                    </select>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="closeRoleTab()">Close</button>
+                  <input type="submit" value="Register UserRole" class="btn btn-primary btn-sm" ng-click="updateRoleTab(roletabs.assignedTab)">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-4 col-md-offset-4">
+      <div class="modal fade" id="createRoleModal" tabindex="-1" role="dialog" aria-labelledby="createRoleModalLabel"
+           aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel1">Registration form</h4>
+            </div>
+            <div class="modal-body">
+              <form ng-submit="registerRoleForm()" class="pb-modalreglog-form-reg">
+                <div class="form-group">
+                  <div id="pb-modalreglog-progressbar1"></div>
+                </div>
+                <div class="form-group">
+                  <label>TabName</label>
+                  <div class="input-group pb-modalreglog-input-group">
+                                        <span class="input-group-addon"><span
+                                                class="glyphicon glyphicon-user"></span></span>
+                    <input type="text" ng-model="role.name" class="form-control"
+                           id="rname1" placeholder="Enter Tab name">
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <input type="submit" value="Register Tab"
+                         class="btn btn-primary btn-sm">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-4 col-md-offset-4">
+      <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+           aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel">Registration form</h4>
+            </div>
+            <div class="modal-body">
+              <form ng-submit="submitRoleForm(role.id)" class="pb-modalreglog-form-reg">
+                <div class="form-group">
+                  <div id="pb-modalreglog-progressbar"></div>
+                </div>
+                <div ng-if="roleId != null">
+                  <div class="row">
+                    <div class="form-group">
+                      <label>Role</label>
+                      <div class="input-group pb-modalreglog-input-group">
+                                        <span class="input-group-addon"><span
+                                                class="glyphicon glyphicon-user"></span></span>
+                        <input type="text" ng-model="role.name" id="name" class="form-control"
+                               placeholder="Edit Tab Name">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <input type="submit" value="Edit Tab Name"
+                         class="btn btn-primary btn-sm">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-right">
+    <a class="btn btn-default btn-rounded mb-4"
+       data-toggle="modal" data-target="#createRoleModal" ng-click="clearRole()">
+      Create Tab
+    </a>
+  </div>
+  <div class="container">
+    <div class="panel panel-default ">
+      <div class="alert alert-info">
+        <span class="lead">List of Tabs </span>
+      </div>
+      <div class="panel-body ">
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered ">
+            <thead>
+            <tr>
+              <th>TabName</th>
+              <th width="100">Edit</th>
+              <th width="100">Delete</th>
+              <th width="100">Tabs</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="role in roles">
+              <td>{{role.name}}</td>
+              <td>
+                <button type="button" ng-click="editRole(role.id)"
+                        class="btn btn-primary custom-width" data-toggle="modal"
+                        data-target="#myModal2">
+                  <span class="glyphicon glyphicon-edit"></span> Edit
+                </button>
+              </td>
+              <td>
+                <button type="button" ng-click="deleteRole(role.id)"
+                        class="btn btn-danger custom-width">
+                  <span class="glyphicon glyphicon-remove"></span> Delete
+                </button>
+              </td>
+              <td>
+                <button type="button" ng-click="showTabs(role.id)"
+                        class="btn btn-primary custom-width" data-toggle="modal"
+                        data-target="#createTabModal">
+                  <span class="glyphicon glyphicon-edit"></span> Assign Tab
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

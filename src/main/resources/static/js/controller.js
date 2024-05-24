@@ -385,6 +385,12 @@ app.controller('usersDetailsController',function($rootScope,$scope, $http, $loca
 }
 );
 
+app.controller('listTabController', function ($rootScope,$scope, $http, $location, $route) {
+
+        console.log("Inside of listRoleController...");
+    }
+);
+
 app.controller('listRoleController', function($rootScope,$scope, $http, $location, $route) {
 
     console.log("Inside of listRoleController...");
