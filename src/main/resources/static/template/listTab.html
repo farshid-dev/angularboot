@@ -1,14 +1,14 @@
 <div class="container pb-modalreglog-container">
     <div class="row">
         <div class="col-xs-12 col-md-4 col-md-offset-4">
-            <div class="modal fade" id="createTabModal" tabindex="-1" role="dialog" aria-labelledby="createTabModalLabel" aria-hidden="true">
+            <div class="modal fade" id="assignFeaturesModal" tabindex="-1" role="dialog" aria-labelledby="assignFeaturesModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="closeTabModal()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            <h4 class="modal-title" id="createTabModalLabel">Assign Tab to Role</h4>
+                            <h4 class="modal-title" id="assignFeaturesModalLabel">Assign Feature to Tab</h4>
                         </div>
                         <div class="modal-body">
                             <form ng-submit="" class="pb-modalreglog-form-reg">
@@ -17,7 +17,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-5">
-                                        <div>Available Tabs</div>
+                                        <div>Available Features</div>
                                         <select size="5" multiple ng-model="availableTabs" style="width: 100%; height: 150px;" ng-options="tab.name for tab in tabData.availableTabs track by tab.id"></select>
                                     </div>
                                     <div class="col-xs-2">
@@ -90,6 +90,7 @@
                             <th>Tab Name</th>
                             <th width="100">Edit</th>
                             <th width="100">Delete</th>
+                            <th width="150">Features</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -103,6 +104,16 @@
                             <td>
                                 <button type="button" ng-click="deleteTab(tab.id)" class="btn btn-danger custom-width">
                                     <span class="glyphicon glyphicon-remove"></span> Delete
+                                </button>
+                            </td>
+                            <td>
+                                <!--<button type="button" ng-click="assignFeatures(tab.id)" class="btn btn-primary custom-width" data-toggle="modal" data-target="#createTabPageModal">
+                                    <span class="glyphicon glyphicon-edit"></span> Assign Features
+                                </button>-->
+                                <button type="button" ng-click="showFeatures(tab.id)"
+                                        class="btn btn-primary custom-width" data-toggle="modal"
+                                        data-target="#assignFeaturesModal">
+                                    <span class="glyphicon glyphicon-edit"></span> Assign Features
                                 </button>
                             </td>
                         </tr>

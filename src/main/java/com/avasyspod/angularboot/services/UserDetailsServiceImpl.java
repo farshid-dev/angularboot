@@ -16,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-
-
 /**
  * Created by farshidkhalaj on 9/17/18.
  */
