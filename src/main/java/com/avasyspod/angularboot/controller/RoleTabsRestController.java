@@ -117,10 +117,9 @@ public class RoleTabsRestController
 
         if (roleTabsEntity.isPresent()) {
 
-            for (RoleTab roleTab:roleTabsEntity.get()) {
-
+            for (RoleTab roleTab:roleTabsEntity.get())
+            {
                 roleTabsJpaRepository.delete(roleTab);
-
             }
 
             RoleTab roleTab = new RoleTab();

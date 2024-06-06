@@ -10,11 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -108,6 +106,32 @@ public class TabFeatureController
                     new FeatureTabErrorType("Featurs with id " + id + " not found").toMap(),
                     HttpStatus.NOT_FOUND);
 
+    }
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<FeatureTab> updateFeatureTab(@PathVariable("id") final Long id, @RequestBody List<Features> features)
+    {
+        logger.info("Updating FeatureTab with id {}", id);
+
+        Optional<List<FeatureTab>> featureTabs = featureTabJpaRepository.findByTabId(id);
+
+        if (featureTabs.isPresent())
+        {
+            for(FeatureTab featureTab:featureTabs.get())
+                featureTabJpaRepository.delete(featureTab);
+        }
+
+        FeatureTab featureTab = new FeatureTab();
+
+        for (Features features1:features)
+        {
+            System.out.println(features1.getName());
+            featureTab.setTabId(features1.getId());
+            featureTab.setFeatureId(id);
+            featureTabJpaRepository.saveAndFlush(featureTab);
+        }
+        return new ResponseEntity<>((FeatureTab)
+                new FeatureTabErrorType("Feature with id: "+ id + "not found").toMap(),
+                HttpStatus.NOT_FOUND);
     }
 }
 

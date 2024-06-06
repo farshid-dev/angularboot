@@ -115,7 +115,7 @@ public class TabRestController {
 
         logger.error("Unable to update. User with id {} not found.", id);
         return new ResponseEntity<Tabs>(
-                new TabErrorType("Unable to upate. User with id " + id + " not found."), HttpStatus.NOT_FOUND);
+                new TabErrorType("Unable to update. User with id " + id + " not found."), HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
