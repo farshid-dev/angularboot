@@ -28,7 +28,8 @@ public class RoleTabsRestController
         this.roleTabsJpaRepository = roleTabsJpaRepository;
         this.tabsJpaRepository = tabsJpaRepository;
     }
-    public TabsJpaRepository getTabsJpaRepository() {
+    public TabsJpaRepository getTabsJpaRepository()
+    {
         return tabsJpaRepository;
     }
 
@@ -98,14 +99,12 @@ public class RoleTabsRestController
             tabsMap.put("assignedTab", assignedTab);
 
             return new ResponseEntity<Map>(tabsMap, HttpStatus.OK);
-
         }
-
             logger.error("Tabs with id {} not found.", id);
 
-            return new ResponseEntity<>(new RoleTabsErrorType("Tabs with id " + id + " not found").toMap(),
+            return new ResponseEntity<>(
+                    new RoleTabsErrorType("Tabs with id " + id + " not found").toMap(),
                     HttpStatus.NOT_FOUND);
-
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

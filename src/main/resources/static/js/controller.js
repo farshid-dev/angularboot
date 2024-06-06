@@ -704,7 +704,7 @@ app.controller('listTabController', function($rootScope, $scope, $http, $locatio
                     $scope.tabfeatures = response.data;
 
                     console.log("Available Features..." + JSON.stringify($scope.tabfeatures.availableFeatures));
-                    console.log("Assigned Features..." + JSON.stringify($scope.tabfeatures.assignedFeature));
+                    console.log("Assigned Features..." + JSON.stringify($scope.tabfeatures.assignedFeatures));
 
                 });
             } else {
@@ -713,8 +713,8 @@ app.controller('listTabController', function($rootScope, $scope, $http, $locatio
             }
         }
 
-        $scope.availableFeatures = [];
-        $scope.selectedFeatures = [];
+        $scope.available = [];
+        $scope.selected = [];
 
         $scope.moveItem = function(itemsToMove, sourceList, targetList) {
             if (itemsToMove && itemsToMove.length > 0) {
@@ -732,28 +732,28 @@ app.controller('listTabController', function($rootScope, $scope, $http, $locatio
                     }
                 }
             }
-            $scope.availableFeatures = [];
-            $scope.selectedFeatures = [];
+            $scope.available = [];
+            $scope.selected = [];
         };
 
         $scope.moveAll = function(sourceList, targetList) {
             $scope.moveItem(sourceList.slice(), sourceList, targetList);
         };
 
-        $scope.tabfeatures = { availableFeature: [], assignedFeature: [] };
+        $scope.tabfeatures = { availableFeatures: [], assignedFeatures: [] };
 
         $scope.closeFeatureModal = function() {
-            $scope.tabfeatures.availableFeature = null;
-            $scope.tabfeatures.assignedFeature = null;
+            $scope.tabfeatures.availableFeatures = null;
+            $scope.tabfeatures.assignedFeatures = null;
         }
 
-        $scope.updateFeatureTab = function(assignedFeature) {
+        $scope.updateFeatureTab = function(assignedFeatures) {
             console.log("update FeatureTab of listTabController...");
 
             $scope.assignedFeatures = [];
 
-            for (var j = 0; j < assignedFeature.length; j++) {
-                var item = assignedFeature[j];
+            for (var j = 0; j < assignedFeatures.length; j++) {
+                var item = assignedFeatures[j];
                 $scope.assignedFeatures.push(item);
             }
 
@@ -763,7 +763,8 @@ app.controller('listTabController', function($rootScope, $scope, $http, $locatio
                 method: 'PUT',
                 url: 'http://localhost:8080/api/features/' + parseInt($scope.tabId),
                 data: $scope.assignedFeatures
-            }).then(function(response) {
+            }).then(function(response)
+            {
                 $scope.updatedFeatures = response.data;
             }, function(errResponse) {
                 $scope.errorMessage = errResponse.data.errorMessage;

@@ -18,25 +18,31 @@
                                 <div class="row">
                                     <div class="col-xs-5">
                                         <div>Available Features</div>
-                                        <select size="5" multiple ng-model="availableFeatures" style="width: 100%; height: 150px;" ng-options="feature.name for feature in tabfeatures.availableFeatures track by feature.id"></select>
+                                        <select size="5" multiple ng-model="available"
+                                                style="width: 100%; height: 150px;"
+                                                ng-options="feature.name for feature in tabfeatures.availableFeatures track by feature.id">
+                                        </select>
                                     </div>
                                     <div class="col-xs-2">
-                                        <button id="moveright" type="button" ng-click="moveItem(availableFeatures, tabfeatures.availableFeatures, tabfeatures.assignedTabs)" class="btn btn-primary btn-block">></button>
+                                        <button id="moveright" type="button" ng-click="moveItem(available, tabfeatures.availableFeatures, tabfeatures.assignedFeatures)" class="btn btn-primary btn-block">></button>
                                         <br>
-                                        <button id="moverightall" type="button" ng-click="moveAll(tabfeatures.availableFeatures, tabfeatures.assignedTabs)" class="btn btn-primary btn-block">>></button>
+                                        <button id="moverightall" type="button" ng-click="moveAll(tabfeatures.availableFeatures, tabfeatures.assignedFeatures)" class="btn btn-primary btn-block">>></button>
                                         <br>
-                                        <button id="moveleft" type="button" ng-click="moveItem(selectedFeatures, tabfeatures.assignedTabs, tabfeatures.availableFeatures)" class="btn btn-primary btn-block"><</button>
+                                        <button id="moveleft" type="button" ng-click="moveItem(selected, tabfeatures.assignedFeatures, tabfeatures.availableFeatures)" class="btn btn-primary btn-block"><</button>
                                         <br>
-                                        <button id="moveleftall" type="button" ng-click="moveAll(tabfeatures.assignedTabs, tabfeatures.availableFeatures)" class="btn btn-primary btn-block"><<</button>
+                                        <button id="moveleftall" type="button" ng-click="moveAll(tabfeatures.assignedFeatures, tabfeatures.availableFeatures)" class="btn btn-primary btn-block"><<</button>
                                     </div>
                                     <div class="col-xs-5">
-                                        <div>Assigned Features</div>
-                                        <select size="5" multiple ng-model="selectedFeatures" style="width: 100%; height: 150px;" ng-options="feature.name for feature in tabfeatures.assignedTabs track by feature.id"></select>
+                                            <div>Assigned Feature</div>
+                                            <select size="5" multiple ng-model="selected"
+                                                    style="width: 100%; height: 150px;"
+                                                ng-options="feature.name for feature in tabfeatures.assignedFeatures track by feature.id">
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="closeTabModal()">Close</button>
-                                    <input type="submit" value="Assign Tabs" class="btn btn-primary btn-sm" ng-click="updateTabFeature(tabfeatures.assignedTabs)">
+                                    <input type="submit" value="Assign Feature" class="btn btn-primary btn-sm" ng-click="updateFeatureTab(tabfeatures.assignedFeatures)">
                                 </div>
                             </form>
                         </div>
