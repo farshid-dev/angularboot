@@ -569,7 +569,7 @@ app.controller('listRoleController', function($rootScope,$scope, $http, $locatio
 
     }
 
-            $scope.updateRoleTab = function (assignedTab) {
+            $scope.updateTabFeature = function (assignedTab) {
 
                 console.log("update RoleTabs of listRoleController...");
 
@@ -607,7 +607,6 @@ app.controller('listRoleController', function($rootScope,$scope, $http, $locatio
 
 });
 
-///// Test
 
 app.controller('listTabController', function($rootScope, $scope, $http, $location, $route) {
 
@@ -698,10 +697,15 @@ app.controller('listTabController', function($rootScope, $scope, $http, $locatio
 
                 $http({
                     method: 'GET',
-                    url: 'http://localhost:8080/api/features/' + $scope.tabId
+                    url: 'http://localhost:8080/api/tabfeatures/' + $scope.tabId
                 }).then(function(response) {
                     console.log("Current data of features to edit..." + JSON.stringify(response.data));
+
                     $scope.tabfeatures = response.data;
+
+                    console.log("Available Features..." + JSON.stringify($scope.tabfeatures.availableFeatures));
+                    console.log("Assigned Features..." + JSON.stringify($scope.tabfeatures.assignedFeature));
+
                 });
             } else {
                 $location.path("/login");

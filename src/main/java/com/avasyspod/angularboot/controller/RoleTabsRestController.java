@@ -71,25 +71,23 @@ public class RoleTabsRestController
 
         List<Tabs> assignedTab = new ArrayList<>();
 
-        if (roleTabsOptional.isPresent()) {
-
-            for (RoleTab roleTab:roleTabsOptional.get()) {
-
+        if (roleTabsOptional.isPresent())
+        {
+            for (RoleTab roleTab:roleTabsOptional.get())
+            {
                   Optional<Tabs> tabs = tabsJpaRepository.findById(roleTab.getTabId());
                   Tabs tab = tabs.get();
                   assignedTab.add(tab);
                   System.out.println("Assigned Tabs : " + assignedTab);
-
             }
+                List<Tabs> allTabs = tabsJpaRepository.findAll();
 
-            List<Tabs> allTabs = tabsJpaRepository.findAll();
-
-            List<Tabs> availableTab = new ArrayList<>();
+                List<Tabs> availableTab = new ArrayList<>();
 
             for (Tabs tab : allTabs) {
 
-                if (!assignedTab.contains(tab)) {
-
+                if (!assignedTab.contains(tab))
+                {
                     availableTab.add(tab);
                 }
             }

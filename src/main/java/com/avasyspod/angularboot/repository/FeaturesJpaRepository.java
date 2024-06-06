@@ -1,6 +1,7 @@
 package com.avasyspod.angularboot.repository;
 
 import com.avasyspod.angularboot.model.Features;
+import com.avasyspod.angularboot.model.Tabs;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FeaturesJpaRepository extends JpaRepository<Features,Long>{
 
-
+    Features findByName(String name);
 }
