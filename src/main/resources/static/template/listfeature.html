@@ -1,13 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>FeaturePage</title>
-</head>
-<body>
-    <h1>
-        Hi,
-        This is test from Farzan.
-    </h1>
-</body>
-</html>
+<div class="container pb-modalreglog-container">
+    <div class="row">
+        <div class="col-xs-12 col-md-4 col-md-offset-4">
+            <div class="modal fade" id="createFeatureModal" tabindex="-1" role="dialog" aria-labelledby="createFeatureModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="createFeatureModalLabel">Create Feature</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form ng-submit="registerFeatureForm()" class="pb-modalreglog-form-reg">
+                                <div class="form-group">
+                                    <label>Feature Name</label>
+                                    <div class="input-group pb-modalreglog-input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-tag"></span></span>
+                                        <input type="text" ng-model="feature.name" class="form-control" id="featureName" placeholder="Enter Feature Name">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" value="Create Feature" class="btn btn-primary btn-sm">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="editFeatureModal" tabindex="-1" role="dialog" aria-labelledby="editFeatureModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="editFeatureModalLabel">Edit Feature</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form ng-submit="submitFeatureForm(feature.id)" class="pb-modalreglog-form-reg">
+                                <div class="form-group">
+                                    <label>Feature Name</label>
+                                    <div class="input-group pb-modalreglog-input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-tag"></span></span>
+                                        <input type="text" ng-model="feature.name" class="form-control" id="editFeatureName" placeholder="Enter Feature Name">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" value="Edit Feature" class="btn btn-primary btn-sm">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="alert alert-info">
+                <span class="lead">List of Features</span>
+                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#createFeatureModal">Create Feature</button>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Feature Name</th>
+                            <th width="100">Edit</th>
+                            <th width="100">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="feature in features">
+                            <td>{{feature.name}}</td>
+                            <td>
+                                <button type="button" ng-click="editFeature(feature.id)" class="btn btn-primary custom-width" data-toggle="modal" data-target="#editFeatureModal">
+                                    <span class="glyphicon glyphicon-edit"></span> Edit
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" ng-click="deleteFeature(feature.id)" class="btn btn-danger custom-width">
+                                    <span class="glyphicon glyphicon-remove"></span> Delete
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

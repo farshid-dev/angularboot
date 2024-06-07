@@ -100,6 +100,39 @@ public class FeatureController
                 new FeatureErrorType("Unable to update. Feature with id " + id + " not found."),
                 HttpStatus.NOT_FOUND);
     }
+   /* @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateFeatures(@PathVariable("id") final Long id, @RequestBody List<Features> featuresList)
+    {
+
+        logger.info("Updating Features for tab with id {}", id);
+
+        Optional<Tabs> tabOptional =.findById(id);
+
+        if (!tabOptional.isPresent()) {
+            logger.error("Unable to update. Tab with id {} not found.", id);
+            return new ResponseEntity<>(new FeatureErrorType("Unable to update. Tab with id " + id + " not found."), HttpStatus.NOT_FOUND);
+        }
+
+        Tabs tab = tabOptional.get();
+        List<Features> updatedFeatures = new ArrayList<>();
+
+        for (Features features : featuresList) {
+            Optional<Features> featuresOptional = featuresJpaRepository.findById(features.getId());
+
+            if (featuresOptional.isPresent()) {
+                Features currentFeature = featuresOptional.get();
+                currentFeature.setName(features.getName());
+                featuresJpaRepository.saveAndFlush(currentFeature);
+                updatedFeatures.add(currentFeature);
+            } else {
+                logger.error("Unable to update. Feature with id {} not found.", features.getId());
+                return new ResponseEntity<>(new FeatureErrorType("Unable to update. Feature with id " + features.getId() + " not found."), HttpStatus.NOT_FOUND);
+            }
+        }
+
+        return new ResponseEntity<>(updatedFeatures, HttpStatus.OK);
+    }*/
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Features> deleteFeature(@PathVariable("id") final Long id)
     {
