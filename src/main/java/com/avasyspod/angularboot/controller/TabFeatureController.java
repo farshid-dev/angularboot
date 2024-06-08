@@ -3,6 +3,7 @@ package com.avasyspod.angularboot.controller;
 import com.avasyspod.angularboot.Exception.FeatureTabErrorType;
 import com.avasyspod.angularboot.model.FeatureTab;
 import com.avasyspod.angularboot.model.Features;
+import com.avasyspod.angularboot.model.RoleTab;
 import com.avasyspod.angularboot.model.Tabs;
 import com.avasyspod.angularboot.repository.FeatureTabJpaRepository;
 import com.avasyspod.angularboot.repository.FeaturesJpaRepository;
@@ -128,6 +129,8 @@ public class TabFeatureController
             featureTab.setTabId(features1.getId());
             featureTab.setFeatureId(id);
             featureTabJpaRepository.saveAndFlush(featureTab);
+
+            return new ResponseEntity<FeatureTab>(featureTab, HttpStatus.OK);
         }
         return new ResponseEntity<>((FeatureTab)
                 new FeatureTabErrorType("Feature with id: "+ id + "not found").toMap(),
