@@ -21,11 +21,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Read Option</label>
-                                    <div class="input-group pb-modalreglog-input-group">
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-option-horizontal"></span></span>
-                                        <input type="text" ng-model="feature.read_option" class="form-control"
-                                        id="editFeatureReadOption" placeholder="Enter Read Option">
+                                    <label>Read_Option</label>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" ng-model="feature.readOption"> assign read_option
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Read_Write Option</label>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" ng-model="feature.readWriteOption"> assign read_Write_option
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="modal-footer">

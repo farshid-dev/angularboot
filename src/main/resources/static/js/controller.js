@@ -426,6 +426,12 @@ app.controller('listFeatureController', function($rootScope, $scope, $http, $loc
         {
             console.log("inside of registerFeatureForm of listFeatureController...");
 
+            $scope.feature.readOption = $scope.feature.readOption ? 1 : 0;
+            $scope.feature.readWriteOption = $scope.feature.readWriteOption ? 1 : 0;
+
+            console.log("Read Option:", $scope.feature.readOption);
+            console.log("Read/Write Option:", $scope.feature.readWriteOption);
+
             $http({
                 method: 'POST',
                 url: 'http://localhost:8080/api/features/',
@@ -442,6 +448,12 @@ app.controller('listFeatureController', function($rootScope, $scope, $http, $loc
         {
             console.log("****feature id after form submission *** is : " + $scope.feature.id);
             console.log("****feature name after form submission *** is : " + $scope.feature.name);
+
+            $scope.feature.readOption = $scope.feature.readOption ? 1 : 0;
+            $scope.feature.readWriteOption = $scope.feature.readWriteOption ? 1 : 0;
+
+  /*          console.log("Updated Read Option:", $scope.feature.readOption);
+            console.log("Updated Read/Write Option:", $scope.feature.readWriteOption);*/
 
             $http({
                 method: 'PUT',
