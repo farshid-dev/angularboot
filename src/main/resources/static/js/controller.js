@@ -828,13 +828,13 @@ app.controller('listTabController', function($rootScope, $scope, $http, $locatio
             $scope.tabfeatures.assignedFeatures = null;
         }
 
-        $scope.updateFeatureTab = function(assignedFeature) {
+        $scope.updateFeatureTab = function(assignedFeatures) {
             console.log("update FeatureTab of listTabController...");
 
             $scope.assignedFeatures = [];
 
-            for (var j = 0; j < assignedFeature.length; j++) {
-                var item = assignedFeature[j];
+            for (var j = 0; j < assignedFeatures.length; j++) {
+                var item = assignedFeatures[j];
                 $scope.assignedFeatures.push(item);
             }
 

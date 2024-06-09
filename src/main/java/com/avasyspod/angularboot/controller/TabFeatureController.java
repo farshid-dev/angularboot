@@ -19,79 +19,66 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/tabfeatures")
-public class TabFeatureController
-{
+public class TabFeatureController {
     public static final Logger logger = LoggerFactory.getLogger(FeatureController.class);
     private FeatureTabJpaRepository featureTabJpaRepository;
     private FeaturesJpaRepository featuresJpaRepository;
 
     public TabFeatureController(FeatureTabJpaRepository featureTabJpaRepository,
-                                FeaturesJpaRepository featuresJpaRepository)
-    {
+                                FeaturesJpaRepository featuresJpaRepository) {
         this.featureTabJpaRepository = featureTabJpaRepository;
         this.featuresJpaRepository = featuresJpaRepository;
     }
 
-    public FeatureTabJpaRepository getFeatureTabJpaRepository()
-    {
+    public FeatureTabJpaRepository getFeatureTabJpaRepository() {
         return featureTabJpaRepository;
     }
 
     @Autowired
-    public void setFeatureTabJpaRepository(FeatureTabJpaRepository featureTabJpaRepository)
-    {
+    public void setFeatureTabJpaRepository(FeatureTabJpaRepository featureTabJpaRepository) {
         this.featureTabJpaRepository = featureTabJpaRepository;
     }
 
-    public FeaturesJpaRepository getFeaturesJpaRepository()
-    {
+    public FeaturesJpaRepository getFeaturesJpaRepository() {
         return featuresJpaRepository;
     }
 
     @Autowired
-    public void setFeaturesJpaRepository(FeaturesJpaRepository featuresJpaRepository)
-    {
+    public void setFeaturesJpaRepository(FeaturesJpaRepository featuresJpaRepository) {
         this.featuresJpaRepository = featuresJpaRepository;
     }
 
 
     @GetMapping("/")
-    public ResponseEntity<List<FeatureTab>> listAllFeatureTab()
-    {
+    public ResponseEntity<List<FeatureTab>> listAllFeatureTab() {
         logger.info("Fetching all FeaturesTab");
         List<FeatureTab> featureTabs = featureTabJpaRepository.findAll();
 
-        if (featureTabs.isEmpty())
-        {
+        if (featureTabs.isEmpty()) {
             return new ResponseEntity<List<FeatureTab>>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<FeatureTab>>(featureTabs, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Map> getFeature(@PathVariable("id") final Long id)
-    {
+    public ResponseEntity<Map> getFeature(@PathVariable("id") final Long id) {
         logger.info("Fetching Feature with id {}", id);
 
         Optional<List<FeatureTab>> featureTabs = featureTabJpaRepository.findByTabId(id);
 
         List<Features> assignedFeatures = new ArrayList<>();
 
-        if (featureTabs.isPresent())
-        {
-            for (FeatureTab featureTab : featureTabs.get())
-            {
+        if (featureTabs.isPresent()) {
+            for (FeatureTab featureTab : featureTabs.get()) {
                 Optional<Features> feature = featuresJpaRepository.findById(featureTab.getFeatureId());
                 Features features = feature.get();
                 assignedFeatures.add(features);
                 System.out.println("Assigned Features : " + assignedFeatures);
             }
-                List<Features> allFeature = featuresJpaRepository.findAll();
-                List<Features> availableFeatures = new ArrayList<>();
-            for (Features feature : allFeature)
-            {
-                if (!assignedFeatures.contains(feature))
-                {
+            List<Features> allFeature = featuresJpaRepository.findAll();
+            List<Features> availableFeatures = new ArrayList<>();
+            for (Features feature : allFeature) {
+                if (!assignedFeatures.contains(feature)) {
                     availableFeatures.add(feature);
                 }
             }
@@ -102,14 +89,16 @@ public class TabFeatureController
 
             return new ResponseEntity<Map>(featurssMap, HttpStatus.OK);
         }
-            logger.error("Features with id {} not found.", id);
-            return new ResponseEntity<>(
-                    new FeatureTabErrorType("Featurs with id " + id + " not found").toMap(),
-                    HttpStatus.NOT_FOUND);
+        logger.error("Features with id {} not found.", id);
+        return new ResponseEntity<>(
+                new FeatureTabErrorType("Featurs with id " + id + " not found").toMap(),
+                HttpStatus.NOT_FOUND);
 
     }
+
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FeatureTab> updateFeatureTab(@PathVariable("id") final Long id, @RequestBody List<Features> features)
+    public ResponseEntity<FeatureTab> updateFeatureTab(@PathVariable("id") final Long id,
+                                                       @RequestBody List<Features> features)
     {
         logger.info("Updating FeatureTab with id {}", id);
 
@@ -117,25 +106,28 @@ public class TabFeatureController
 
         if (featureTabs.isPresent())
         {
-            for(FeatureTab featureTab:featureTabs.get())
+            for (FeatureTab featureTab : featureTabs.get())
+            {
                 featureTabJpaRepository.delete(featureTab);
-        }
+            }
+                FeatureTab featureTab = new FeatureTab();
 
-        FeatureTab featureTab = new FeatureTab();
-
-        for (Features features1:features)
-        {
-            System.out.println(features1.getName());
-            featureTab.setTabId(features1.getId());
-            featureTab.setFeatureId(id);
-            featureTabJpaRepository.saveAndFlush(featureTab);
-
+            for (Features features1 : features)
+            {
+                System.out.println(features1.getName());
+                featureTab.setFeatureId(features1.getId());
+                featureTab.setTabId(id);
+                featureTabJpaRepository.saveAndFlush(featureTab);
+            }
             return new ResponseEntity<FeatureTab>(featureTab, HttpStatus.OK);
         }
+
+        logger.error("Unable to update. feature with id {} not found.", id);
         return new ResponseEntity<>((FeatureTab)
-                new FeatureTabErrorType("Feature with id: "+ id + "not found").toMap(),
+                new FeatureTabErrorType("Feature with id: " + id + "not found").toMap(),
                 HttpStatus.NOT_FOUND);
     }
 }
+
 
 
