@@ -396,7 +396,7 @@ app.controller('listFeatureController', function($rootScope, $scope, $http, $loc
 
         $http({
             method: 'GET',
-            url: 'http://localhost:8080/api/feature/'
+            url: 'http://localhost:8080/api/features/'
         }).then(function(response) {
             console.log(JSON.stringify(response.data));
             $scope.features = response.data;
@@ -411,7 +411,7 @@ app.controller('listFeatureController', function($rootScope, $scope, $http, $loc
 
                 $http({
                     method: 'GET',
-                    url: 'http://localhost:8080/api/feature/' + $scope.featureId
+                    url: 'http://localhost:8080/api/features/' + $scope.featureId
                 }).then(function(response) {
                     console.log("Current data of feature to edit..." + JSON.stringify(response.data));
                     $scope.feature = response.data;
@@ -428,7 +428,7 @@ app.controller('listFeatureController', function($rootScope, $scope, $http, $loc
 
             $http({
                 method: 'POST',
-                url: 'http://localhost:8080/api/feature/',
+                url: 'http://localhost:8080/api/features/',
                 data: $scope.feature,
             }).then(function(response) {
                 $('.modal-backdrop').hide();
@@ -445,7 +445,7 @@ app.controller('listFeatureController', function($rootScope, $scope, $http, $loc
 
             $http({
                 method: 'PUT',
-                url: 'http://localhost:8080/api/feature/' + featureId,
+                url: 'http://localhost:8080/api/features/' + featureId,
                 data: $scope.feature
             }).then(function(response) {
                 console.log("Updated Feature data..." + JSON.stringify(response.data));
@@ -460,7 +460,7 @@ app.controller('listFeatureController', function($rootScope, $scope, $http, $loc
         {
             $http({
                 method: 'DELETE',
-                url: 'http://localhost:8080/api/feature/' + featureId
+                url: 'http://localhost:8080/api/features/' + featureId
             }).then(function(response) {
                 $location.path("/list-all-features");
                 $route.reload();

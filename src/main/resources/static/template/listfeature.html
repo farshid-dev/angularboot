@@ -19,6 +19,13 @@
                                         <input type="text" ng-model="feature.name" class="form-control" id="featureName" placeholder="Enter Feature Name">
                                     </div>
                                 </div>
+                              <!--  <div class="form-group">
+                                    <label>Read Option</label>
+                                    <div class="input-group pb-modalreglog-input-group">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-option-horizontal"></span></span>
+                                        <input type="text" ng-model="feature.read_option" class="form-control" id="editFeatureReadOption" placeholder="Enter Read Option">
+                                    </div>
+                                </div>-->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     <input type="submit" value="Create Feature" class="btn btn-primary btn-sm">
@@ -41,10 +48,19 @@
                         <div class="modal-body">
                             <form ng-submit="submitFeatureForm(feature.id)" class="pb-modalreglog-form-reg">
                                 <div class="form-group">
-                                    <label>Feature Name</label>
-                                    <div class="input-group pb-modalreglog-input-group">
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-tag"></span></span>
-                                        <input type="text" ng-model="feature.name" class="form-control" id="editFeatureName" placeholder="Enter Feature Name">
+                                    <div id="pb-modalreglog-progressbar"></div>
+                                </div>
+                                <div ng-if="featureId != null">
+                                    <div class="row">
+                                        <div class="form-group">
+                                             <label>Feature Name</label>
+                                             <div class="input-group pb-modalreglog-input-group">
+                                                 <span class="input-group-addon"><span
+                                                class="glyphicon glyphicon-tag"></span></span>
+                                                 <input type="text" ng-model="feature.name" class="form-control" id="editFeatureName"
+                                               placeholder="Enter Feature Name">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -63,7 +79,7 @@
         <div class="panel panel-default">
             <div class="alert alert-info">
                 <span class="lead">List of Features</span>
-                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#createFeatureModal">Create Feature</button>
+                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#createFeatureModal" ng-click="clearFeature()">Create Feature</button>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
