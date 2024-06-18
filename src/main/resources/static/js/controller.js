@@ -415,8 +415,16 @@ app.controller('listFeatureController', function($rootScope, $scope, $http, $loc
                 }).then(function(response) {
                     console.log("Current data of feature to edit..." + JSON.stringify(response.data));
                     $scope.feature = response.data;
+
+                    if ($scope.feature.readWriteOption === 1) {
+                        $scope.feature.option = 'read_write';
+                    } else if ($scope.feature.readOption === 1) {
+                        $scope.feature.option = 'read';
+                    } else {
+                        $scope.feature.option = ''; // default, no option selected
+                    }
                 });
-            } else {
+            } else{
                 $location.path("/login");
                 $scope.loginerror = true;
             }
@@ -449,11 +457,13 @@ app.controller('listFeatureController', function($rootScope, $scope, $http, $loc
             console.log("****feature id after form submission *** is : " + $scope.feature.id);
             console.log("****feature name after form submission *** is : " + $scope.feature.name);
 
+            $scope.featureId = featureId;
+
             $scope.feature.readOption = $scope.feature.readOption ? 1 : 0;
             $scope.feature.readWriteOption = $scope.feature.readWriteOption ? 1 : 0;
 
-  /*          console.log("Updated Read Option:", $scope.feature.readOption);
-            console.log("Updated Read/Write Option:", $scope.feature.readWriteOption);*/
+            console.log("Updated Read Option:", $scope.feature.readOption);
+            console.log("Updated Read/Write Option:", $scope.feature.readWriteOption);
 
             $http({
                 method: 'PUT',

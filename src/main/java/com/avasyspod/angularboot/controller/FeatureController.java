@@ -93,6 +93,8 @@ public class FeatureController
         {
             Features currentFeature = features1.get();
             currentFeature.setName(features.getName());
+            currentFeature.setReadOption(features.getReadOption());
+            currentFeature.setReadWriteOption(features.getReadWriteOption());
 
             featuresJpaRepository.saveAndFlush(currentFeature);
             return new ResponseEntity<Features>(currentFeature, HttpStatus.OK);
