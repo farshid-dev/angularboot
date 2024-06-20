@@ -1,23 +1,28 @@
 package com.avasyspod.angularboot.security;
 
-public class UserDTO {
-
+public class UserDTO
+{
     private long id;
     private String username;
     private String password;
     private String address;
     private String email;
     private Byte enabled;
-
     private long userRoleId;
-
     private String userRoleName;
 
-
-    public UserDTO() {
+    public UserDTO()
+    {
     }
-
-    public UserDTO(long id, String username, String password, String address, String email, Byte enabled, long userRoleId,String userRoleName) {
+    public UserDTO(long id,
+                   String username,
+                   String password,
+                   String address,
+                   String email,
+                   Byte enabled,
+                   long userRoleId,
+                   String userRoleName)
+    {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -86,8 +91,6 @@ public class UserDTO {
 
         this.userRoleId = userRoleId;
     }
-
-
 
     public String getUserRoleName() {
         return userRoleName;

@@ -20,11 +20,13 @@ public class CustomUser extends User {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }
 
-    public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities, Map<String, List<FinalFeatures>> featuresMap) {
+    public CustomUser(String username, String password,
+                      Collection<? extends GrantedAuthority> authorities,
+                      Map<String, List<FinalFeatures>> featuresMap)
+    {
         super(username, password, authorities);
         this.featuresMap = featuresMap;
     }
-
 
     public Map<String , List<FinalFeatures>> getFeaturesMap() {
 

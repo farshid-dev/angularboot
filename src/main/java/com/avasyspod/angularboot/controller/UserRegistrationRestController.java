@@ -42,27 +42,29 @@ public class UserRegistrationRestController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UserRegistrationRestController() {
-
+    public UserRegistrationRestController()
+    {
     }
-
-    public UserRegistrationRestController(UserJpaRepository userJpaRepository,RoleJpaRepository roleJpaRepository,UserRoleJpaRepository userRoleJpaRepository) {
+    public UserRegistrationRestController(UserJpaRepository userJpaRepository,
+                                          RoleJpaRepository roleJpaRepository,
+                                          UserRoleJpaRepository userRoleJpaRepository)
+    {
         this.userJpaRepository = userJpaRepository;
         this.userRoleJpaRepository = userRoleJpaRepository;
         this.roleJpaRepository = roleJpaRepository;
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<UserDTO>> listAllUsers() {
-
+    public ResponseEntity<List<UserDTO>> listAllUsers()
+    {
         logger.info("Fetching all users");
 
         List<UserDTO> users = userService.getUsersWithRoleNames();
 
-        if (users.isEmpty()) {
+        if (users.isEmpty())
+        {
             return new ResponseEntity<List<UserDTO>>(HttpStatus.NO_CONTENT);
         }
-
         return new ResponseEntity<List<UserDTO>>(users, HttpStatus.OK);
     }
 

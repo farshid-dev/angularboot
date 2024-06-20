@@ -29,7 +29,8 @@ public class TabRestController {
     }
 
     @Autowired
-    public void setTabJpaRepository(TabsJpaRepository tabsJpaRepository) {
+    public void setTabJpaRepository(TabsJpaRepository tabsJpaRepository)
+    {
         this.tabsJpaRepository = tabsJpaRepository;
     }
 

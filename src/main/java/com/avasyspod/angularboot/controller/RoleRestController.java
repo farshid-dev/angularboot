@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-
-
 /**
  * Created by farshidkhalaj on 10/1/20.
  */
@@ -54,14 +52,14 @@ public class RoleRestController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Role> getRoleById(@PathVariable("id") final Long id) {
-
+    public ResponseEntity<Role> getRoleById(@PathVariable("id") final Long id)
+    {
         logger.info("Fetching Role with id {}", id);
 
         Optional<Role> userOptional = roleJpaRepository.findById(id);
 
-        if (userOptional.isPresent()) {
-
+        if (userOptional.isPresent())
+        {
             System.out.println("User with Selected id is there");
 
             Role role = userOptional.get();
@@ -69,14 +67,11 @@ public class RoleRestController {
             System.out.println("Rolename is : "+ role.getName());
 
             return new ResponseEntity<Role>(role, HttpStatus.OK);
-
         }
+            logger.error("User with id {} not found.", id);
 
-        logger.error("User with id {} not found.", id);
-
-        return new ResponseEntity<Role>(new RoleErrorType("Role with id " + id + " not found"),
+            return new ResponseEntity<Role>(new RoleErrorType("Role with id " + id + " not found"),
                 HttpStatus.NOT_FOUND);
-
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)

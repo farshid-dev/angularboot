@@ -4,7 +4,8 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-public class User {
+public class User
+{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
@@ -74,11 +75,17 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(address, user.address) && Objects.equals(email, user.email) && Objects.equals(enabled, user.enabled);
+        return id == user.id &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(address, user.address) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(enabled, user.enabled);
     }
 
     @Override

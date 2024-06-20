@@ -17,57 +17,54 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/roletabs")
-public class RoleTabsRestController {
-
+public class RoleTabsRestController
+{
     public static final Logger logger = LoggerFactory.getLogger(TabRestController.class);
-
     private RoleTabsJpaRepository roleTabsJpaRepository;
-
     private TabsJpaRepository tabsJpaRepository;
 
-    public RoleTabsRestController(RoleTabsJpaRepository roleTabsJpaRepository, TabsJpaRepository tabsJpaRepository) {
+    public RoleTabsRestController(RoleTabsJpaRepository roleTabsJpaRepository, TabsJpaRepository tabsJpaRepository)
+    {
         this.roleTabsJpaRepository = roleTabsJpaRepository;
         this.tabsJpaRepository = tabsJpaRepository;
     }
-
     public TabsJpaRepository getTabsJpaRepository() {
         return tabsJpaRepository;
     }
 
-    public void setTabsJpaRepository(TabsJpaRepository tabsJpaRepository) {
+    public void setTabsJpaRepository(TabsJpaRepository tabsJpaRepository)
+    {
         this.tabsJpaRepository = tabsJpaRepository;
     }
 
-    public RoleTabsJpaRepository getRoleTabsJpaRepository() {
-
+    public RoleTabsJpaRepository getRoleTabsJpaRepository()
+    {
         return roleTabsJpaRepository;
     }
 
     @Autowired
-    public void setRoleTabsJpaRepository(RoleTabsJpaRepository roleTabsJpaRepository) {
+    public void setRoleTabsJpaRepository(RoleTabsJpaRepository roleTabsJpaRepository)
+    {
         this.roleTabsJpaRepository = roleTabsJpaRepository;
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<RoleTab>> listAllRoleTabs() {
-
+    public ResponseEntity<List<RoleTab>> listAllRoleTabs()
+    {
         logger.info("Fetching all roleTabs");
 
         List<RoleTab> roleTabs = roleTabsJpaRepository.findAll();
 
-
-        if (roleTabs.isEmpty()) {
+        if (roleTabs.isEmpty())
+        {
             return new ResponseEntity<List<RoleTab>>(HttpStatus.NO_CONTENT);
         }
-
         return new ResponseEntity<List<RoleTab>>(roleTabs, HttpStatus.OK);
-
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<Map> getTabs(@PathVariable("id") final Long id) {
-
+    public ResponseEntity<Map> getTabs(@PathVariable("id") final Long id)
+    {
         logger.info("Fetching Tab with id {}", id);
 
         Optional<List<RoleTab>> roleTabsOptional = roleTabsJpaRepository.findByRoleId(id);
