@@ -28,7 +28,8 @@ public class RoleTabsRestController
         this.roleTabsJpaRepository = roleTabsJpaRepository;
         this.tabsJpaRepository = tabsJpaRepository;
     }
-    public TabsJpaRepository getTabsJpaRepository() {
+    public TabsJpaRepository getTabsJpaRepository()
+    {
         return tabsJpaRepository;
     }
 
@@ -71,25 +72,23 @@ public class RoleTabsRestController
 
         List<Tabs> assignedTab = new ArrayList<>();
 
-        if (roleTabsOptional.isPresent()) {
-
-            for (RoleTab roleTab:roleTabsOptional.get()) {
-
+        if (roleTabsOptional.isPresent())
+        {
+            for (RoleTab roleTab:roleTabsOptional.get())
+            {
                   Optional<Tabs> tabs = tabsJpaRepository.findById(roleTab.getTabId());
                   Tabs tab = tabs.get();
                   assignedTab.add(tab);
                   System.out.println("Assigned Tabs : " + assignedTab);
-
             }
+                List<Tabs> allTabs = tabsJpaRepository.findAll();
 
-            List<Tabs> allTabs = tabsJpaRepository.findAll();
-
-            List<Tabs> availableTab = new ArrayList<>();
+                List<Tabs> availableTab = new ArrayList<>();
 
             for (Tabs tab : allTabs) {
 
-                if (!assignedTab.contains(tab)) {
-
+                if (!assignedTab.contains(tab))
+                {
                     availableTab.add(tab);
                 }
             }
@@ -100,14 +99,12 @@ public class RoleTabsRestController
             tabsMap.put("assignedTab", assignedTab);
 
             return new ResponseEntity<Map>(tabsMap, HttpStatus.OK);
-
         }
-
             logger.error("Tabs with id {} not found.", id);
 
-            return new ResponseEntity<>(new RoleTabsErrorType("Tabs with id " + id + " not found").toMap(),
+            return new ResponseEntity<>(
+                    new RoleTabsErrorType("Tabs with id " + id + " not found").toMap(),
                     HttpStatus.NOT_FOUND);
-
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -117,33 +114,29 @@ public class RoleTabsRestController
 
         Optional<List<RoleTab>> roleTabsEntity = roleTabsJpaRepository.findByRoleId(id);
 
-        if (roleTabsEntity.isPresent()) {
-
-            for (RoleTab roleTab:roleTabsEntity.get()) {
-
+        if (roleTabsEntity.isPresent())
+        {
+            for (RoleTab roleTab:roleTabsEntity.get())
+            {
                 roleTabsJpaRepository.delete(roleTab);
-
             }
+                RoleTab roleTab = new RoleTab();
 
-            RoleTab roleTab = new RoleTab();
-
-            for (Tabs tab:tabs) {
-
+            for (Tabs tab:tabs)
+            {
                 System.out.println(tab.getName());
                 roleTab.setTabId(tab.getId());
                 roleTab.setRoleId(id);
                 roleTabsJpaRepository.saveAndFlush(roleTab);
             }
-
             //roleTabsJpaRepository.saveAndFlush(roleTab);
-
             return new ResponseEntity<RoleTab>(roleTab, HttpStatus.OK);
-
         }
 
         logger.error("Unable to update. User with id {} not found.", id);
 
-        return new ResponseEntity<RoleTab>((RoleTab) new RoleTabsErrorType("Tabs with id " + id + " not found").toMap(),
+        return new ResponseEntity<RoleTab>((RoleTab)
+                new RoleTabsErrorType("Tabs with id " + id + " not found").toMap(),
                 HttpStatus.NOT_FOUND);
     }
 

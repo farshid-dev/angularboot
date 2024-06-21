@@ -3,25 +3,21 @@ package com.avasyspod.angularboot.Exception;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RoleTabsErrorType {
-
+public class FeatureTabErrorType
+{
     private String errorMessage;
-
-    public RoleTabsErrorType(final String errorMessage){
-
+    public FeatureTabErrorType(final String errorMessage)
+    {
         this.errorMessage = errorMessage;
     }
-
-    public String getErrorMessage() {
-
+    public String getErrorMessage()
+    {
         return errorMessage;
     }
-
-    public Map<String, String> toMap() {
-
+    public Map<String, String> toMap()
+    {
         Map<String, String> errorMap = new HashMap<>();
         errorMap.put("errorMessage", errorMessage);
-
         return errorMap;
     }
 }

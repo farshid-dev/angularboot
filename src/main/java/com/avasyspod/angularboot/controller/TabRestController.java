@@ -50,14 +50,14 @@ public class TabRestController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tabs> getTabById(@PathVariable("id") final Long id) {
-
+    public ResponseEntity<Tabs> getTabById(@PathVariable("id") final Long id)
+    {
         logger.info("Fetching Tab with id {}", id);
 
         Optional<Tabs> tabsOptional = tabsJpaRepository.findById(id);
 
-        if (tabsOptional.isPresent()) {
-
+        if (tabsOptional.isPresent())
+        {
             System.out.println("Tab with Selected id is there");
 
             Tabs tabs = tabsOptional.get();
@@ -65,23 +65,21 @@ public class TabRestController {
             System.out.println("Tabname is : "+ tabs.getName());
 
             return new ResponseEntity<Tabs>(tabs, HttpStatus.OK);
-
         }
-
         logger.error("User with id {} not found.", id);
 
-        return new ResponseEntity<Tabs>(new TabErrorType("Tab with id " + id + " not found"),
+        return new ResponseEntity<Tabs>(
+                new TabErrorType("Tab with id " + id + " not found"),
                 HttpStatus.NOT_FOUND);
-
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Tabs> createTab(@Valid @RequestBody final Tabs tabs) {
-
+    public ResponseEntity<Tabs> createTab(@Valid @RequestBody final Tabs tabs)
+    {
         logger.info("Creating Role : {}", tabs);
 
-        if (tabsJpaRepository.findByName(tabs.getName()) != null) {
-
+        if (tabsJpaRepository.findByName(tabs.getName()) != null)
+        {
             logger.error("Unable to create. A User with name {} already exist", tabs.getName());
 
             return new ResponseEntity<Tabs>(
@@ -95,18 +93,17 @@ public class TabRestController {
         tabsJpaRepository.save(tabs);
 
         return new ResponseEntity<Tabs>(tabs, HttpStatus.CREATED);
-
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Tabs> updateTab(@PathVariable("id") final Long id, @RequestBody Tabs tabs) {
-
+    public ResponseEntity<Tabs> updateTab(@PathVariable("id") final Long id, @RequestBody Tabs tabs)
+    {
         logger.info("Updating Role with id {}", id);
 
         Optional<Tabs> tabEntity = tabsJpaRepository.findById(id);
 
-        if (tabEntity.isPresent()) {
-
+        if (tabEntity.isPresent())
+        {
             Tabs currentTab = tabEntity.get();
 
             currentTab.setName(tabs.getName());
@@ -114,13 +111,11 @@ public class TabRestController {
             tabsJpaRepository.saveAndFlush(currentTab);
 
             return new ResponseEntity<Tabs>(currentTab, HttpStatus.OK);
-
         }
 
         logger.error("Unable to update. User with id {} not found.", id);
         return new ResponseEntity<Tabs>(
-                new TabErrorType("Unable to upate. User with id " + id + " not found."), HttpStatus.NOT_FOUND);
-
+                new TabErrorType("Unable to update. User with id " + id + " not found."), HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")

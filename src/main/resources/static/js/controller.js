@@ -385,12 +385,120 @@ app.controller('usersDetailsController',function($rootScope,$scope, $http, $loca
 }
 );
 
-app.controller('listFeaturesController', function ($rootScope,$scope, $http, $location, $route) {
 
-        console.log("Inside of listRoleController...");
+app.controller('listFeatureController', function($rootScope, $scope, $http, $location, $route)
+{
+     console.log("Inside of listFeatureController...");
+
+    if ($rootScope.authenticated && $rootScope.currentRole == "ADMIN")
+    {
+        console.log("Passed the condition inside the listFeatureController");
+
+        $http({
+            method: 'GET',
+            url: 'http://localhost:8080/api/features/'
+        }).then(function(response) {
+            console.log(JSON.stringify(response.data));
+            // $scope.features = response.data;
+            // the method below is converting the readOption and readWriteOption  to the Yes and No
+            $scope.features = response.data.map(function(feature) {
+                feature.readOption = feature.readOption === "1" ? 'Yes' : 'No';
+                feature.readWriteOption = feature.readWriteOption === "1" ? 'Yes' : 'No';
+                return feature;
+            });
+        });
+
+        $scope.editFeature = function(featureId)
+        {
+            if ($rootScope.authenticated && $rootScope.currentRole == "ADMIN") {
+                console.log("I am inside the editFeature of listFeatureController to update the feature");
+
+                $scope.featureId = featureId;
+
+                $http({
+                    method: 'GET',
+                    url: 'http://localhost:8080/api/features/' + $scope.featureId
+                }).then(function(response) {
+                    console.log("Current data of feature to edit..." + JSON.stringify(response.data));
+                    $scope.feature = response.data;
+
+                    if ($scope.feature.readWriteOption === 1) {
+                        $scope.feature.option = 'read_write';
+                    } else if ($scope.feature.readOption === 1) {
+                        $scope.feature.option = 'read';
+                    } else {
+                        $scope.feature.option = ''; // default, no option selected
+                    }
+                });
+            } else{
+                $location.path("/login");
+                $scope.loginerror = true;
+            }
+        }
+
+        $scope.registerFeatureForm = function()
+        {
+            console.log("inside of registerFeatureForm of listFeatureController...");
+
+            $scope.feature.readOption = $scope.feature.readOption ? 1 : 0;
+            $scope.feature.readWriteOption = $scope.feature.readWriteOption ? 1 : 0;
+
+
+            console.log("Read Option:", $scope.feature.readOption);
+            console.log("Read/Write Option:", $scope.feature.readWriteOption);
+
+            $http({
+                method: 'POST',
+                url: 'http://localhost:8080/api/features/',
+                data: $scope.feature,
+            }).then(function(response) {
+                $('.modal-backdrop').hide();
+                $route.reload();
+            }, function(errResponse) {
+                $scope.errorMessage = errResponse.data.errorMessage;
+            });
+        }
+
+        $scope.submitFeatureForm = function(featureId)
+        {
+            console.log("****feature id after form submission *** is : " + $scope.feature.id);
+            console.log("****feature name after form submission *** is : " + $scope.feature.name);
+
+            $scope.feature.readOption = $scope.feature.option === 'read' ? 1 : 0;
+            $scope.feature.readWriteOption = $scope.feature.option === 'read_write' ? 1 : 0;
+
+            console.log("Updated Read Option:", $scope.feature.readOption);
+            console.log("Updated Read/Write Option:", $scope.feature.readWriteOption);
+
+            $http({
+                method: 'PUT',
+                url: 'http://localhost:8080/api/features/' + featureId,
+                data: $scope.feature
+            }).then(function(response) {
+                console.log("Updated Feature data..." + JSON.stringify(response.data));
+                $('.modal-backdrop').hide();
+                $route.reload();
+            }, function(errResponse) {
+                $scope.errorMessage = "Error while updating Feature - Error Message: '" + errResponse.data.errorMessage;
+            });
+        }
+
+        $scope.deleteFeature = function(featureId)
+        {
+            $http({
+                method: 'DELETE',
+                url: 'http://localhost:8080/api/features/' + featureId
+            }).then(function(response) {
+                $location.path("/list-all-features");
+                $route.reload();
+            });
+        }
+
+        $scope.clearFeature = function() {
+            $scope.feature = {}; // Clear feature object
+        };
     }
-);
-
+});
 
 app.controller('listRoleController', function($rootScope,$scope, $http, $location, $route) {
 
@@ -569,7 +677,7 @@ app.controller('listRoleController', function($rootScope,$scope, $http, $locatio
 
     }
 
-            $scope.updateRoleTab = function (assignedTab) {
+            $scope.updateTabFeature = function (assignedTab) {
 
                 console.log("update RoleTabs of listRoleController...");
 
@@ -607,7 +715,6 @@ app.controller('listRoleController', function($rootScope,$scope, $http, $locatio
 
 });
 
-///// Test
 
 app.controller('listTabController', function($rootScope, $scope, $http, $location, $route) {
 
@@ -698,10 +805,15 @@ app.controller('listTabController', function($rootScope, $scope, $http, $locatio
 
                 $http({
                     method: 'GET',
-                    url: 'http://localhost:8080/api/features/' + $scope.tabId
+                    url: 'http://localhost:8080/api/tabfeatures/' + $scope.tabId
                 }).then(function(response) {
                     console.log("Current data of features to edit..." + JSON.stringify(response.data));
+
                     $scope.tabfeatures = response.data;
+
+                    console.log("Available Features..." + JSON.stringify($scope.tabfeatures.availableFeatures));
+                    console.log("Assigned Features..." + JSON.stringify($scope.tabfeatures.assignedFeatures));
+
                 });
             } else {
                 $location.path("/login");
@@ -709,8 +821,8 @@ app.controller('listTabController', function($rootScope, $scope, $http, $locatio
             }
         }
 
-        $scope.availableFeatures = [];
-        $scope.selectedFeatures = [];
+        $scope.available = [];
+        $scope.selected = [];
 
         $scope.moveItem = function(itemsToMove, sourceList, targetList) {
             if (itemsToMove && itemsToMove.length > 0) {
@@ -728,28 +840,28 @@ app.controller('listTabController', function($rootScope, $scope, $http, $locatio
                     }
                 }
             }
-            $scope.availableFeatures = [];
-            $scope.selectedFeatures = [];
+            $scope.available = [];
+            $scope.selected = [];
         };
 
         $scope.moveAll = function(sourceList, targetList) {
             $scope.moveItem(sourceList.slice(), sourceList, targetList);
         };
 
-        $scope.tabfeatures = { availableFeature: [], assignedFeature: [] };
+        $scope.tabfeatures = { availableFeatures: [], assignedFeatures: [] };
 
         $scope.closeFeatureModal = function() {
-            $scope.tabfeatures.availableFeature = null;
-            $scope.tabfeatures.assignedFeature = null;
+            $scope.tabfeatures.availableFeatures = null;
+            $scope.tabfeatures.assignedFeatures = null;
         }
 
-        $scope.updateFeatureTab = function(assignedFeature) {
+        $scope.updateFeatureTab = function(assignedFeatures) {
             console.log("update FeatureTab of listTabController...");
 
             $scope.assignedFeatures = [];
 
-            for (var j = 0; j < assignedFeature.length; j++) {
-                var item = assignedFeature[j];
+            for (var j = 0; j < assignedFeatures.length; j++) {
+                var item = assignedFeatures[j];
                 $scope.assignedFeatures.push(item);
             }
 
@@ -757,9 +869,10 @@ app.controller('listTabController', function($rootScope, $scope, $http, $locatio
 
             $http({
                 method: 'PUT',
-                url: 'http://localhost:8080/api/features/' + parseInt($scope.tabId),
+                url: 'http://localhost:8080/api/tabfeatures/' + parseInt($scope.tabId),
                 data: $scope.assignedFeatures
-            }).then(function(response) {
+            }).then(function(response)
+            {
                 $scope.updatedFeatures = response.data;
             }, function(errResponse) {
                 $scope.errorMessage = errResponse.data.errorMessage;

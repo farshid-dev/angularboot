@@ -1,14 +1,14 @@
 <div class="container pb-modalreglog-container">
     <div class="row">
         <div class="col-xs-12 col-md-4 col-md-offset-4">
-            <div class="modal fade" id="assignFeaturesModal" tabindex="-1" role="dialog" aria-labelledby="assignFeaturesModalLabel" aria-hidden="true">
+            <div class="modal fade" id="assignFeaturesModal" tabindex="-1" role="dialog" aria-labelledby="createTabPageModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="closeTabModal()">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            <h4 class="modal-title" id="assignFeaturesModalLabel">Assign Feature to Tab</h4>
+                            <h4 class="modal-title" id="myModalLabel2">Assign Feature to Tab</h4>
                         </div>
                         <div class="modal-body">
                             <form ng-submit="" class="pb-modalreglog-form-reg">
@@ -18,25 +18,31 @@
                                 <div class="row">
                                     <div class="col-xs-5">
                                         <div>Available Features</div>
-                                        <select size="5" multiple ng-model="availableTabs" style="width: 100%; height: 150px;" ng-options="tab.name for tab in tabData.availableTabs track by tab.id"></select>
+                                        <select size="5" multiple ng-model="available"
+                                                style="width: 100%; height: 150px;"
+                                                ng-options="feature.name for feature in tabfeatures.availableFeatures track by feature.id">
+                                        </select>
                                     </div>
                                     <div class="col-xs-2">
-                                        <button id="moveright" type="button" ng-click="moveItem(availableTabs, tabData.availableTabs, tabData.assignedTabs)" class="btn btn-primary btn-block">></button>
+                                        <button id="moveright" type="button" ng-click="moveItem(available, tabfeatures.availableFeatures, tabfeatures.assignedFeatures)" class="btn btn-primary btn-block">></button>
                                         <br>
-                                        <button id="moverightall" type="button" ng-click="moveAll(tabData.availableTabs, tabData.assignedTabs)" class="btn btn-primary btn-block">>></button>
+                                        <button id="moverightall" type="button" ng-click="moveAll(tabfeatures.availableFeatures, tabfeatures.assignedFeatures)" class="btn btn-primary btn-block">>></button>
                                         <br>
-                                        <button id="moveleft" type="button" ng-click="moveItem(selectedTabs, tabData.assignedTabs, tabData.availableTabs)" class="btn btn-primary btn-block"><</button>
+                                        <button id="moveleft" type="button" ng-click="moveItem(selected, tabfeatures.assignedFeatures, tabfeatures.availableFeatures)" class="btn btn-primary btn-block"><</button>
                                         <br>
-                                        <button id="moveleftall" type="button" ng-click="moveAll(tabData.assignedTabs, tabData.availableTabs)" class="btn btn-primary btn-block"><<</button>
+                                        <button id="moveleftall" type="button" ng-click="moveAll(tabfeatures.assignedFeatures, tabfeatures.availableFeatures)" class="btn btn-primary btn-block"><<</button>
                                     </div>
                                     <div class="col-xs-5">
-                                        <div>Assigned Tabs</div>
-                                        <select size="5" multiple ng-model="selectedTabs" style="width: 100%; height: 150px;" ng-options="tab.name for tab in tabData.assignedTabs track by tab.id"></select>
+                                            <div>Assigned Feature</div>
+                                            <select size="5" multiple ng-model="selected"
+                                                    style="width: 100%; height: 150px;"
+                                                ng-options="feature.name for feature in tabfeatures.assignedFeatures track by feature.id">
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="closeTabModal()">Close</button>
-                                    <input type="submit" value="Assign Tabs" class="btn btn-primary btn-sm" ng-click="updateRoleTabs(tabData.assignedTabs)">
+                                    <input type="submit" value="Assign Feature" class="btn btn-primary btn-sm" ng-click="updateFeatureTab(tabfeatures.assignedFeatures)">
                                 </div>
                             </form>
                         </div>
@@ -47,27 +53,33 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-md-4 col-md-offset-4">
-            <div class="modal fade" id="createTabPageModal" tabindex="-1" role="dialog" aria-labelledby="createTabPageModalLabel" aria-hidden="true">
+            <div class="modal fade" id="createTabModal" tabindex="-1" role="dialog" aria-labelledby="createTabPageModalLabel"
+                 aria-hidden="true">
                 <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            <h4 class="modal-title" id="createTabPageModalLabel">Create Tab</h4>
+                            <h4 class="modal-title" id="myModalLabel1">Registration form</h4>
                         </div>
                         <div class="modal-body">
-                            <form ng-submit="createTab()" class="pb-modalreglog-form-reg">
+                            <form ng-submit="registerTabForm()" class="pb-modalreglog-form-reg">
+                                <div class="form-group">
+                                    <div id="pb-modalreglog-progressbar1"></div>
+                                </div>
                                 <div class="form-group">
                                     <label>Tab Name</label>
                                     <div class="input-group pb-modalreglog-input-group">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-tag"></span></span>
-                                        <input type="text" ng-model="tab.name" class="form-control" id="tabName" placeholder="Enter Tab Name">
+                                        <input type="text" ng-model="tab.name" class="form-control"
+                                               id="tabName" placeholder="Enter Tab Name">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" value="Create Tab" class="btn btn-primary btn-sm">
+                                    <input type="submit" value="Edit Tab"
+                                           class="btn btn-primary btn-sm">
                                 </div>
                             </form>
                         </div>
@@ -76,11 +88,55 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-4 col-md-offset-4">
+            <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Registration form</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form ng-submit="submitTabForm(tab.id)" class="pb-modalreglog-form-reg">
+                                <div class="form-group">
+                                    <div id="pb-modalreglog-progressbar"></div>
+                                </div>
+                                <div ng-if="tabId != null">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label>Tab</label>
+                                            <div class="input-group pb-modalreglog-input-group">
+                                                <span class="input-group-addon"><span
+                                                class="glyphicon glyphicon-user"></span></span>
+                                                <input type="text" ng-model="tab.name" id="name" class="form-control"
+                                                       placeholder="Edit Tab Name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" value="Edit Tab Name"
+                                           class="btn btn-primary btn-sm">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="panel panel-default">
             <div class="alert alert-info">
                 <span class="lead">List of Tabs</span>
-                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#createTabPageModal">Create Tab</button>
+                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#createTabModal" ng-click="clearTab()">Create Tab</button>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -97,19 +153,19 @@
                         <tr ng-repeat="tab in tabs">
                             <td>{{tab.name}}</td>
                             <td>
-                                <button type="button" ng-click="editTab(tab.id)" class="btn btn-primary custom-width" data-toggle="modal" data-target="#createTabPageModal">
+                                <button type="button" ng-click="editTab(tab.id)"
+                                        class="btn btn-primary custom-width" data-toggle="modal"
+                                        data-target="#myModal2">
                                     <span class="glyphicon glyphicon-edit"></span> Edit
                                 </button>
                             </td>
                             <td>
-                                <button type="button" ng-click="deleteTab(tab.id)" class="btn btn-danger custom-width">
+                                <button type="button" ng-click="deleteTab(tab.id)"
+                                        class="btn btn-danger custom-width">
                                     <span class="glyphicon glyphicon-remove"></span> Delete
                                 </button>
                             </td>
                             <td>
-                                <!--<button type="button" ng-click="assignFeatures(tab.id)" class="btn btn-primary custom-width" data-toggle="modal" data-target="#createTabPageModal">
-                                    <span class="glyphicon glyphicon-edit"></span> Assign Features
-                                </button>-->
                                 <button type="button" ng-click="showFeatures(tab.id)"
                                         class="btn btn-primary custom-width" data-toggle="modal"
                                         data-target="#assignFeaturesModal">

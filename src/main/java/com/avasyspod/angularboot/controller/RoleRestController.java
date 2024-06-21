@@ -98,28 +98,23 @@ public class RoleRestController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Role> updateRole(@PathVariable("id") final Long id, @RequestBody Role role) {
-
+    public ResponseEntity<Role> updateRole(@PathVariable("id") final Long id, @RequestBody Role role)
+    {
         logger.info("Updating Role with id {}", id);
 
         Optional<Role> roleEntity = roleJpaRepository.findById(id);
 
-        if (roleEntity.isPresent()) {
-
+        if (roleEntity.isPresent())
+        {
             Role currentRole = roleEntity.get();
-
             currentRole.setName(role.getName());
 
             roleJpaRepository.saveAndFlush(currentRole);
-
             return new ResponseEntity<Role>(currentRole, HttpStatus.OK);
-
         }
-
         logger.error("Unable to update. User with id {} not found.", id);
         return new ResponseEntity<Role>(
-                new RoleErrorType("Unable to upate. User with id " + id + " not found."), HttpStatus.NOT_FOUND);
-
+                new RoleErrorType("Unable to update. User with id " + id + " not found."), HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
