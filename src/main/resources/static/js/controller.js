@@ -399,7 +399,13 @@ app.controller('listFeatureController', function($rootScope, $scope, $http, $loc
             url: 'http://localhost:8080/api/features/'
         }).then(function(response) {
             console.log(JSON.stringify(response.data));
-            $scope.features = response.data;
+            // $scope.features = response.data;
+            // the method below is converting the readOption and readWriteOption  to the Yes and No
+            $scope.features = response.data.map(function(feature) {
+                feature.readOption = feature.readOption === "1" ? 'Yes' : 'No';
+                feature.readWriteOption = feature.readWriteOption === "1" ? 'Yes' : 'No';
+                return feature;
+            });
         });
 
         $scope.editFeature = function(featureId)
@@ -437,6 +443,7 @@ app.controller('listFeatureController', function($rootScope, $scope, $http, $loc
             $scope.feature.readOption = $scope.feature.readOption ? 1 : 0;
             $scope.feature.readWriteOption = $scope.feature.readWriteOption ? 1 : 0;
 
+
             console.log("Read Option:", $scope.feature.readOption);
             console.log("Read/Write Option:", $scope.feature.readWriteOption);
 
@@ -457,10 +464,8 @@ app.controller('listFeatureController', function($rootScope, $scope, $http, $loc
             console.log("****feature id after form submission *** is : " + $scope.feature.id);
             console.log("****feature name after form submission *** is : " + $scope.feature.name);
 
-            $scope.featureId = featureId;
-
-            $scope.feature.readOption = $scope.feature.readOption ? 1 : 0;
-            $scope.feature.readWriteOption = $scope.feature.readWriteOption ? 1 : 0;
+            $scope.feature.readOption = $scope.feature.option === 'read' ? 1 : 0;
+            $scope.feature.readWriteOption = $scope.feature.option === 'read_write' ? 1 : 0;
 
             console.log("Updated Read Option:", $scope.feature.readOption);
             console.log("Updated Read/Write Option:", $scope.feature.readWriteOption);
