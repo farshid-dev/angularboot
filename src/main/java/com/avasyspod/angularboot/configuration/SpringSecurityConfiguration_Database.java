@@ -41,7 +41,7 @@ public class SpringSecurityConfiguration_Database extends WebSecurityConfigurerA
 
         http
                 .authorizeRequests()
-                .antMatchers("/api/user/**")
+                .antMatchers("/api/**")
                 .authenticated()
                 .and()
                 .httpBasic()
