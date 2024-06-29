@@ -79,9 +79,8 @@ app.controller ('loginController', function($rootScope, $scope, $http, $location
 
                 console.log(JSON.stringify($rootScope.navbarData));
 
-
                 //Get the List of Roles
-                $http({
+              /* $http({
                     method: 'GET',
                     url: 'http://localhost:8080/api/role/',
                     data: $scope.role,
@@ -92,7 +91,7 @@ app.controller ('loginController', function($rootScope, $scope, $http, $location
                         $rootScope.roleNames.push({id: item.id, name: item.name});
                     });
 
-                });
+                });*/
             }
              else {
                 $rootScope.authenticated = false;
@@ -552,7 +551,7 @@ app.controller('listRoleController', function($rootScope,$scope, $http, $locatio
 
         $scope.registerRoleForm = function () {
 
-            console.log("inside of submitRoleForm of listRoleController...");
+            console.log("inside of registerRoleForm of listRoleController...");
 
             $http({
                 method: 'POST',
@@ -666,6 +665,7 @@ app.controller('listRoleController', function($rootScope,$scope, $http, $locatio
             };
 
             $scope.roletabs = {availableTab: [], assignedTab: []};
+
             console.log("Final roletabs is : " + $scope.roletabs)
 
             $scope.closeRoleTab = function (){
@@ -677,7 +677,7 @@ app.controller('listRoleController', function($rootScope,$scope, $http, $locatio
 
     }
 
-            $scope.updateTabFeature = function (assignedTab) {
+            $scope.updateRoleTab = function (assignedTab) {
 
                 console.log("update RoleTabs of listRoleController...");
 
