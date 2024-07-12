@@ -68,7 +68,8 @@ public class TabFeatureController {
 
         List<Features> assignedFeatures = new ArrayList<>();
 
-        if (featureTabs.isPresent()) {
+        if (featureTabs.isPresent())
+        {
             for (FeatureTab featureTab : featureTabs.get()) {
                 Optional<Features> feature = featuresJpaRepository.findById(featureTab.getFeatureId());
                 Features features = feature.get();
