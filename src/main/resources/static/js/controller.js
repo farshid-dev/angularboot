@@ -80,7 +80,7 @@ app.controller ('loginController', function($rootScope, $scope, $http, $location
                 console.log(JSON.stringify($rootScope.navbarData));
 
                 //Get the List of Roles
-              /* $http({
+               $http({
                     method: 'GET',
                     url: 'http://localhost:8080/api/role/',
                     data: $scope.role,
@@ -91,7 +91,7 @@ app.controller ('loginController', function($rootScope, $scope, $http, $location
                         $rootScope.roleNames.push({id: item.id, name: item.name});
                     });
 
-                });*/
+                });
             }
              else {
                 $rootScope.authenticated = false;
@@ -666,7 +666,8 @@ app.controller('listRoleController', function($rootScope,$scope, $http, $locatio
 
             $scope.roletabs = {availableTab: [], assignedTab: []};
 
-            console.log("Final roletabs is : " + $scope.roletabs)
+            console.log("Final roletabs is : " + $scope.roletabs.availableTab)
+            console.log("Final roletabs is : " + $scope.roletabs.assignedTab)
 
             $scope.closeRoleTab = function (){
 
@@ -856,7 +857,7 @@ app.controller('listTabController', function($rootScope, $scope, $http, $locatio
         }
 
         $scope.updateFeatureTab = function(assignedFeatures) {
-            console.log("update FeatureTab of listTabController...");
+            console.log("updateFeatureTab of listTabController...");
 
             $scope.assignedFeatures = [];
 

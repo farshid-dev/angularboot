@@ -72,8 +72,6 @@ public class  UserDetailsServiceImpl implements UserDetailsService
 
         User user = userJpaRepository.findByUsername(username);
 
-        System.out.println("User Id is : " + user.getId());
-
         if (user == null) {
 
             System.out.println("User is null in loadUserByUsername.....");
@@ -85,7 +83,7 @@ public class  UserDetailsServiceImpl implements UserDetailsService
       /*  return new org.springframework.security.core.userdetails.User(
                 user.getUsername(), user.getPassword(),
                 getAuthorities(user));*/
-      System.out.println(user.getUsername()+" : "+user.getPassword());
+
       return new CustomUser(user.getUsername(),user.getPassword(),getAuthorities(user),getFeatures(user));
     }
 
@@ -95,54 +93,55 @@ public class  UserDetailsServiceImpl implements UserDetailsService
 
         Map<String, List<FinalFeatures>> tabFeaturesMap = new HashMap<>();
 
-        UserRole userRole = userRoleJpaRepository.findByUserId(user.getId()).get();
-
-        Role role = roleJpaRepository.findById(userRole.getRoleId()).get();
-
-        List<RoleTab> roleTab = null;
+        UserRole userRole = null;
         try {
-            roleTab = (List<RoleTab>) roleTabsJpaRepository.findByRoleId(role.getId()).get();
+            userRole = userRoleJpaRepository.findByUserId(user.getId()).get();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        for(RoleTab roleTabs : roleTab){
+        Role role = roleJpaRepository.findById(userRole.getRoleId()).get();
 
-            Tabs tabs = tabsJpaRepository.findById(roleTabs.getTabId()).get();
+        Optional<List<RoleTab>> roleTab = roleTabsJpaRepository.findByRoleId(role.getId());
 
-            String tabName = tabs.getName();
+        if (roleTab.isPresent()) {
 
-            List<FeatureTab> featureTab = null;
+            for (RoleTab roleTabs : roleTab.get()) {
 
-            try {
-                featureTab = (List<FeatureTab>) featureTabJpaRepository.findByTabId(tabs.getId()).get();
+                Tabs tabs = tabsJpaRepository.findById(roleTabs.getTabId()).get();
 
+                String tabName = tabs.getName();
+
+                Optional<List<FeatureTab>> featureTab = featureTabJpaRepository.findByTabId(tabs.getId());
+
+                List<FinalFeatures> featuresList = new ArrayList<>();
+
+                if (featureTab.isPresent()) {
+
+                    for (FeatureTab features : featureTab.get()) {
+
+                        Features feature = featuresJpaRepository.findById(features.getFeatureId()).get();
+
+                        FinalFeatures finalFeatures = new FinalFeatures();
+                        finalFeatures.setRolename(role.getName());
+                        finalFeatures.setFeaturename(feature.getName());
+                        finalFeatures.setReadoption(feature.getReadOption());
+                        finalFeatures.setReadwriteOption(feature.getReadWriteOption());
+
+                        featuresList.add(finalFeatures);
+                    }
+
+                    tabFeaturesMap.put(tabName, featuresList);
+                }else{
+                    tabFeaturesMap.put(tabName, featuresList);
+                }
             }
-            catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+                return tabFeaturesMap;
+        } else {
 
-            List<FinalFeatures> featuresList = new ArrayList<>();
-
-            for (FeatureTab features : featureTab) {
-
-                Features feature = featuresJpaRepository.findById(features.getFeatureId()).get();
-
-                FinalFeatures finalFeatures = new FinalFeatures();
-                finalFeatures.setRolename(role.getName());
-                finalFeatures.setFeaturename(feature.getName());
-                finalFeatures.setReadoption(feature.getReadOption());
-                finalFeatures.setReadwriteOption(feature.getReadWriteOption());
-
-                featuresList.add(finalFeatures);
-            }
-
-
-            tabFeaturesMap.put(tabName, featuresList);
-
+            return tabFeaturesMap;
         }
 
-        return tabFeaturesMap;
     }
 
 
@@ -152,13 +151,19 @@ public class  UserDetailsServiceImpl implements UserDetailsService
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-        UserRole userRole = userRoleJpaRepository.findByUserId(user.getId()).get();
+        UserRole userRole = null;
+        try {
+            userRole = userRoleJpaRepository.findByUserId(user.getId()).get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-            Role role = roleJpaRepository.findById(userRole.getRoleId()).get();
+        Role role = roleJpaRepository.findById(userRole.getRoleId()).get();
 
-            List<RoleTab> roleTab = (List<RoleTab>) roleTabsJpaRepository.findByRoleId(role.getId()).get();
+        Optional<List<RoleTab>> roleTab = roleTabsJpaRepository.findByRoleId(role.getId());
 
-            for (RoleTab roleTabs : roleTab) {
+        if (roleTab.isPresent()) {
+            for (RoleTab roleTabs : roleTab.get()) {
 
                 Tabs tabs = tabsJpaRepository.findById(roleTabs.getTabId()).get();
 
@@ -166,6 +171,11 @@ public class  UserDetailsServiceImpl implements UserDetailsService
 
             }
 
-        return grantedAuthorities;
+            return grantedAuthorities;
+        } else {
+
+            return grantedAuthorities;
+
+        }
     }
 }

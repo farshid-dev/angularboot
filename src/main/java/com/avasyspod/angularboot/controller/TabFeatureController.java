@@ -1,10 +1,7 @@
 package com.avasyspod.angularboot.controller;
 
-import com.avasyspod.angularboot.Exception.FeatureTabErrorType;
 import com.avasyspod.angularboot.model.FeatureTab;
 import com.avasyspod.angularboot.model.Features;
-import com.avasyspod.angularboot.model.RoleTab;
-import com.avasyspod.angularboot.model.Tabs;
 import com.avasyspod.angularboot.repository.FeatureTabJpaRepository;
 import com.avasyspod.angularboot.repository.FeaturesJpaRepository;
 import org.slf4j.Logger;
@@ -67,6 +64,8 @@ public class TabFeatureController {
         Optional<List<FeatureTab>> featureTabs = featureTabJpaRepository.findByTabId(id);
 
         List<Features> assignedFeatures = new ArrayList<>();
+        List<Features> availableFeatures = new ArrayList<>();
+        Map<String, List<Features>> featurssMap = new HashMap<>();
 
         if (featureTabs.isPresent()) {
             for (FeatureTab featureTab : featureTabs.get()) {
@@ -76,23 +75,35 @@ public class TabFeatureController {
                 System.out.println("Assigned Features : " + assignedFeatures);
             }
             List<Features> allFeature = featuresJpaRepository.findAll();
-            List<Features> availableFeatures = new ArrayList<>();
+
             for (Features feature : allFeature) {
                 if (!assignedFeatures.contains(feature)) {
                     availableFeatures.add(feature);
                 }
             }
-            Map<String, List<Features>> featurssMap = new HashMap<>();
+
 
             featurssMap.put("availableFeatures", availableFeatures);
             featurssMap.put("assignedFeatures", assignedFeatures);
 
             return new ResponseEntity<Map>(featurssMap, HttpStatus.OK);
+
+        }else{
+
+            logger.error("Features with id {} not found.", id);
+            List<Features> allFeatures = featuresJpaRepository.findAll();
+
+            for (Features feature : allFeatures) {
+
+                availableFeatures.add(feature);
+
+            }
+
+            featurssMap.put("availableFeatures", availableFeatures);
+            featurssMap.put("assignedFeatures", assignedFeatures);
+            return new ResponseEntity<Map>(featurssMap,
+                    HttpStatus.OK);
         }
-        logger.error("Features with id {} not found.", id);
-        return new ResponseEntity<>(
-                new FeatureTabErrorType("Featurs with id " + id + " not found").toMap(),
-                HttpStatus.NOT_FOUND);
 
     }
 
@@ -120,12 +131,24 @@ public class TabFeatureController {
                 featureTabJpaRepository.saveAndFlush(featureTab);
             }
             return new ResponseEntity<FeatureTab>(featureTab, HttpStatus.OK);
+        }else {
+
+            FeatureTab featureTab = new FeatureTab();
+
+            for (Features features1:features)
+            {
+                System.out.println(features1.getName());
+                featureTab.setTabId(id);
+                featureTab.setFeatureId(features1.getId());
+                featureTabJpaRepository.saveAndFlush(featureTab);
+            }
+
+            logger.error("Unable to update. feature with id {} not found.", id);
+            return new ResponseEntity<FeatureTab>(featureTab,
+                    HttpStatus.OK);
+
         }
 
-        logger.error("Unable to update. feature with id {} not found.", id);
-        return new ResponseEntity<>((FeatureTab)
-                new FeatureTabErrorType("Feature with id: " + id + "not found").toMap(),
-                HttpStatus.NOT_FOUND);
     }
 }
 
