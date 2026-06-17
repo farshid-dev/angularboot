@@ -20,7 +20,7 @@ A **Spring Boot** + **AngularJS** + **MySQL** web application that dynamically a
 
 | Layer       | Technology |
 |-------------|------------|
-| Backend     | Spring Boot, Spring Security, JWT, Hibernate |
+| Backend     | Spring Boot, Spring Security, Hibernate |
 | Frontend    | AngularJS (1.x), HTML, CSS, Bootstrap |
 | Database    | MySQL |
 | Build Tool  | Maven |
