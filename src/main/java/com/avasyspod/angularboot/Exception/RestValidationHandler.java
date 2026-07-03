@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * This class is applied to each controller.
  * 
- * @author Ravi Kant Soni
+ * Created by farshidkhalaj on 9/17/22.
  *
  */
 @ControllerAdvice
