@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * This DTO wraps all validation errors together.
  * 
- * @author Ravi Kant Soni
+ * Created by farshidkhalaj on 9/17/20.
  *
  */
 public class FieldValidationErrorDetails {
