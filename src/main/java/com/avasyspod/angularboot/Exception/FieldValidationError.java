@@ -5,7 +5,7 @@ import java.awt.TrayIcon.MessageType;
 /**
  * This DTO contains the information of a single validation error.
  * 
- * @author Ravi Kant Soni
+ * Created by farshidkhalaj on 9/17/20.
  *
  */
 public class FieldValidationError {
