@@ -27,5 +27,3 @@ A **Spring Boot** + **AngularJS** + **MySQL** web application that dynamically a
 | Other       | Log4j, JUnit |
 
 ---
-
-## 📁 Project Structure
